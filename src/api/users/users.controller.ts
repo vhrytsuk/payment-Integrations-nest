@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
-import type { Request } from 'express';
 import { Authorized, Protected } from 'src/common/decorators';
+import type { User } from 'src/generated/prisma/client';
 
 import { UsersService } from './users.service';
 
@@ -10,7 +10,7 @@ export class UsersController {
 
 	@Protected()
 	@Get('@me')
-	public getMe(@Authorized('id') id: string) {
-		return id;
+	public getMe(@Authorized() user: User) {
+		return user;
 	}
 }
